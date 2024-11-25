@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="error_message_network">Ошибка сети. Пожалуйста, попробуйте снова.</string>
+    <string name="error_message_no_internet">Нет подключения к интернету. Пожалуйста, проверьте ваше соединение.</string>
+    <string name="error_message_server">Ошибка сервера. Пожалуйста, попробуйте снова позже.</string>
+    <string name="error_message_server_unreachable">Сервер недоступен. Пожалуйста, попробуйте позже.</string>
+    <string name="error_message_empty_data">Нет данных для отображения. Пожалуйста, попробуйте снова.</string>
+    <string name="error_message_invalid_data">Получены некорректные данные. Пожалуйста, попробуйте позже.</string>
+    <string name="error_message_generic">Произошла ошибка. Пожалуйста, попробуйте снова.</string>
+    <string name="message_data_loaded">Данные успешно загружены.</string>
+    <string name="message_retry">Попробуйте снова.</string>
+    <string name="button_retry">Повторить</string>
+</resources>
