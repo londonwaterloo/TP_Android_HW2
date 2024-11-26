@@ -1,5 +1,7 @@
 package com.hw.tp_Android_HW2.viewmodel
 
+import android.media.Image
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,8 +20,16 @@ class MainViewModel : ViewModel() {
     private var _errorMessage = mutableStateOf<String?>(null)
     val errorMessage: State<String?> = _errorMessage
 
+    private var _currentImage = mutableStateOf<String>("")
+    val currentImage: State<String> = _currentImage
+
     private var offset = 0
     private val limit = 20
+
+    fun toggleFullScreen(url:String) {
+        Log.i("qwerty", url)
+        _currentImage.value = url
+    }
 
     init {
         fetchGifs()

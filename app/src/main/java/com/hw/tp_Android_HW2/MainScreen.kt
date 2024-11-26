@@ -1,5 +1,6 @@
 package com.hw.tp_Android_HW2
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -19,8 +20,18 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
     val gifList = viewModel.gifList
     val loading by viewModel.loading
     val errorMessage by viewModel.errorMessage
+    val currentMessage by viewModel.currentImage
 
-    if (loading && gifList.isEmpty()) {
+    if (currentMessage.isNotEmpty()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        viewModel.toggleFullScreen("")
+                    }){
+                     GifImage(currentMessage, viewModel)
+                }
+    } else if (loading && gifList.isEmpty()) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
@@ -29,7 +40,7 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
     } else {
         LazyColumn {
             itemsIndexed(gifList) { index, gif ->
-                GifImage(url = gif.images.original.url)
+                GifImage(url = gif.images.original.url, viewModel)
                 if (index == gifList.lastIndex && !loading && errorMessage == null) {
                     viewModel.fetchGifs()
                 }
@@ -50,14 +61,18 @@ fun MainScreen(viewModel: MainViewModel = viewModel()) {
     }
 }
 
+
 @Composable
-fun GifImage(url: String) {
+fun GifImage(url: String, viewModel: MainViewModel) {
     AsyncImage(
         model = url,
         contentDescription = null,
         modifier = Modifier
             .fillMaxWidth()
             .aspectRatio(1f)
+            .clickable{viewModel.toggleFullScreen(url)}
+
+
     )
 }
 
@@ -89,11 +104,11 @@ fun ErrorPlaceholder(message: String?, onRetry: () -> Unit) {
 
 @Composable
 fun RetryLoadMoreItem(message: String?, onRetry: () -> Unit) {
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
-        horizontalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center
     ) {
         Text(message ?: stringResource(id = R.string.error_message_generic))
         Spacer(modifier = Modifier.width(8.dp))
